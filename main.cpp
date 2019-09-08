@@ -6,7 +6,6 @@
 
 
 bool win (std::string map) {
-    // TODO : need to consider the initial state
     if (map == "         ") return false;
     // check for horizontal
     for (int i = 0; i <= 6; i += 3) { 
@@ -20,16 +19,14 @@ bool win (std::string map) {
     }
 
     // check for diagonal
-    if (map[0] == ' ' || map[4] == ' ' || map[8] == ' ' 
-        || map[2] ==' ' || map[6] == ' ') return false;
-    if (map[0] == map[4] && map[4] == map[8]) return true;
-    if (map[2] == map[4] && map[4] == map[6]) return true;
+    if (map[0] == map[4] && map[4] == map[8] && map[0] != ' ') return true;
+    if (map[2] == map[4] && map[4] == map[6] && map[2] != ' ') return true;
 
     return false;
 }
-bool valid_input (int position = -1, char player = '@') {
-    if (position != -1 && player != '@') {
-        if (0 <= position && position <= 8 && (player == 'o' || player == 'x')) 
+bool valid_input (int position = -1){
+    if (position != -1) {
+        if (0 <= position && position <= 8) 
             return true;
         else 
             return false;
@@ -41,8 +38,8 @@ bool valid_input (int position = -1, char player = '@') {
 void message (std::string output) {
     std::cout << output << std::endl;
 }
-void update(std::string map, int position, char player) {
-    map[position] = player;
+void update(std::string& map, int position, bool turn){
+    map[position] = (turn==A)?'o':'x';
 }
 void print (std::string map) {
     system("clear");
@@ -64,21 +61,21 @@ void print (std::string map) {
     */
 }
 int main () {
-    // - for nothing
+    // ' ' for nothing
     // initial map
     std::string map = "         ";
     bool turn = A;
+    int position;
+
     print(map);
 
     while (!win(map)) {
         // input chess
-        int position;
-        char player;
         std::cout << "input where you want to place (0~8)\n";
-        std::cin >> position >> player;
-        if (valid_input(position, player)) {
+        std::cin >> position ;
+        if (valid_input(position)) {
             // update
-            update(map, position, player);
+            update(map, position, turn);
             turn = !turn;
             // print map
             print(map);
@@ -86,4 +83,6 @@ int main () {
             message("invalid input please input again!");
         }
     }
+    if (turn == A) std::cout << "A is winner !\n";
+    else std::cout << "B is winner !\n";
 }
