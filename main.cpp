@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#define A true 
-#define B false
+#define PLAYER true 
+#define COMPUTER false
 
 
 
@@ -39,7 +39,7 @@ void message (std::string output) {
     std::cout << output << std::endl;
 }
 void update(std::string& map, int position, bool turn){
-    map[position] = (turn==A)?'o':'x';
+    map[position] = (turn==PLAYER)?'o':'x';
 }
 void print (std::string map) {
     system("clear");
@@ -64,14 +64,14 @@ int main () {
     // ' ' for nothing
     // initial map
     std::string map = "012345678";
-    bool turn = A;
+    bool turn = PLAYER;
     int position;
 
     print(map);
 
     while (!win(map)) {
         // input chess
-        std::cout << "It is " << (turn?"A":"B") << "'s turn\n";
+        std::cout << "It is " << (turn?"PLAYER":"COMPUTER") << "'s turn\n";
         std::cout << "input where you want to place (0~8)\n";
         std::cin >> position ;
         if (valid_input(position)) {
@@ -85,6 +85,6 @@ int main () {
         }
     }
     // turn wherer is the next turn of the game
-    if (turn == A) std::cout << "B is winner !\n";
-    else std::cout << "A is winner !\n";
+    if (turn == PLAYER) std::cout << "COMPUTER is winner !\n";
+    else std::cout << "PLAYER is winner !\n";
 }
