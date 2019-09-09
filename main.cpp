@@ -6,21 +6,21 @@
 
 
 bool win (std::string map) {
-    if (map == "         ") return false;
+    if (map == "012345678") return false;
     // check for horizontal
     for (int i = 0; i <= 6; i += 3) { 
-        if (map[i] == ' ' || map[i+1] == ' ' || map[i+2] == ' ') continue;
+        if (map[i] == i+'0' || map[i+1] == i+'1' || map[i+2] == i+'2') continue;
         if (map[i] == map[i+1] && map[i+1] == map[i+2]) return true;
     }
     // check for vertical 
     for (int i = 0; i <= 2; ++i) {
-        if (map[i] == ' ' || map[i+3] == ' ' || map[i+6] == ' ') continue;
+        if (map[i] == i+'0' || map[i+3] == i+'3' || map[i+6] == i+'6') continue;
         if (map[i] == map[i+3] && map[i+3] == map[i+6]) return true;
     }
 
     // check for diagonal
-    if (map[0] == map[4] && map[4] == map[8] && map[0] != ' ') return true;
-    if (map[2] == map[4] && map[4] == map[6] && map[2] != ' ') return true;
+    if (map[0] == map[4] && map[4] == map[8] && map[0] != '0') return true;
+    if (map[2] == map[4] && map[4] == map[6] && map[2] != '2') return true;
 
     return false;
 }
@@ -63,7 +63,7 @@ void print (std::string map) {
 int main () {
     // ' ' for nothing
     // initial map
-    std::string map = "         ";
+    std::string map = "012345678";
     bool turn = A;
     int position;
 
@@ -71,6 +71,7 @@ int main () {
 
     while (!win(map)) {
         // input chess
+        std::cout << "It is " << (turn?"A":"B") << "'s turn\n";
         std::cout << "input where you want to place (0~8)\n";
         std::cin >> position ;
         if (valid_input(position)) {
@@ -83,6 +84,7 @@ int main () {
             message("invalid input please input again!");
         }
     }
-    if (turn == A) std::cout << "A is winner !\n";
-    else std::cout << "B is winner !\n";
+    // turn wherer is the next turn of the game
+    if (turn == A) std::cout << "B is winner !\n";
+    else std::cout << "A is winner !\n";
 }
