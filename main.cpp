@@ -24,7 +24,10 @@ bool win (std::string map) {
 
     return false;
 }
-bool valid_input (int position = -1){
+bool valid_input (std::string map, int position = -1){
+    // for overwriting 
+    if (map[position] != position+'0') return false;
+
     if (position != -1) {
         if (0 <= position && position <= 8) 
             return true;
@@ -38,8 +41,8 @@ bool valid_input (int position = -1){
 void message (std::string output) {
     std::cout << output << std::endl;
 }
-void update(std::string& map, int position, bool turn){
-    map[position] = (turn==PLAYER)?'o':'x';
+void update(std::string& map, int position, bool turn, std::string player_notation){
+    map[position] = (turn)?player_notation[0]:player_notation[1];
 }
 void print (std::string map) {
     system("clear");
@@ -60,23 +63,41 @@ void print (std::string map) {
         +-----+-----+-----+
     */
 }
+// return what position to place 
+int computer_solve (std::string map) {
+    return 1;
+}
 int main () {
     // ' ' for nothing
     // initial map
     std::string map = "012345678";
     bool turn = PLAYER;
     int position;
+    std::string player_notation = "";
 
+    
+    while (player_notation.length()==0 || (player_notation != "o" && player_notation != "x")) {
+        system("clear");
+        message("\tTic-Tac-Toe game!\n");
+        message("choose which player you want to be!(o or x)\n");
+        std::getline(std::cin, player_notation);
+    }
+    
+    player_notation.push_back((player_notation[0]=='o')?'x':'o');
     print(map);
 
     while (!win(map)) {
         // input chess
-        std::cout << "It is " << (turn?"PLAYER":"COMPUTER") << "'s turn\n";
-        std::cout << "input where you want to place (0~8)\n";
-        std::cin >> position ;
-        if (valid_input(position)) {
+        if (turn == COMPUTER) {
+            position = computer_solve(map);
+        } else {
+            std::cout << "It is PLAYER's turn\n";
+            std::cout << "input where you want to place (0~8)\n";
+            std::cin >> position ;
+        }
+        if (valid_input(map, position)) {
             // update
-            update(map, position, turn);
+            update(map, position, turn, player_notation);
             turn = !turn;
             // print map
             print(map);
