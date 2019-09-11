@@ -1,11 +1,40 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #define PLAYER true 
 #define COMPUTER false
+#define WIN 1
+#define LOSE -1
+#define DRAW 0
+#define NOT_END 2
 
+
+int situation (std::string map) {
+    if (not_end(map)) return NOT_END;
+    if (win(map)) return WIN;
+    if (draw(map)) return DRAW;
+    return LOSE;
+}
+
+bool not_end (std::string map) {
+    bool end = false;
+    for (auto ch : map) {
+        if (ch != 'o' || ch != 'x') end = true;
+    }
+    return end; 
+} 
+
+
+bool draw (std::string map) {
+    if (not_end(map)) return false;
+    if (!win(map) && !lose(map)) return true;
+}
+
+bool lose (std::string map) {
 
 
 bool win (std::string map) {
+    // TODO : use 2d array
     if (map == "012345678") return false;
     // check for horizontal
     for (int i = 0; i <= 6; i += 3) { 
@@ -63,13 +92,30 @@ void print (std::string map) {
         +-----+-----+-----+
     */
 }
+std::vector extend_map(std::string map) {
+}
 // return what position to place 
-int computer_solve (std::string map) {
-    return 1;
+// use minimax
+int computer_solve (std::string map, int depth = 0, std::vector<int > static_value) {
+    switch (situation(map)) {
+        case WIN : return 1;
+        case LOSE : return -1;
+        case DRAW : return 0;
+        default : break;
+    }
+
+    for (auto possible_move : extend_map(map)) {
+        put_on_map(possible_move);
+        static_value[possible_move] = calculate_static_value(possible_move, map);
+        take_out_map(possible_move);
+    }
+
+    return max(index_of_static_value);
 }
 int main () {
     // ' ' for nothing
     // initial map
+    // TODO : use 2d array
     std::string map = "012345678";
     bool turn = PLAYER;
     int position;
@@ -86,7 +132,8 @@ int main () {
     player_notation.push_back((player_notation[0]=='o')?'x':'o');
     print(map);
 
-    while (!win(map)) {
+    while (situation(map) == NOT_END) {
+        // TODO : consider the 'draw' condition
         // input chess
         if (turn == COMPUTER) {
             position = computer_solve(map);
