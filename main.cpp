@@ -1,6 +1,9 @@
+// for only pvc 
+// player is o
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Game.hpp"
 #define PLAYER true 
 #define COMPUTER false
 #define WIN 1
@@ -8,29 +11,6 @@
 #define DRAW 0
 #define NOT_END 2
 
-
-int situation (std::string map) {
-    if (not_end(map)) return NOT_END;
-    if (win(map)) return WIN;
-    if (draw(map)) return DRAW;
-    return LOSE;
-}
-
-bool not_end (std::string map) {
-    bool end = false;
-    for (auto ch : map) {
-        if (ch != 'o' || ch != 'x') end = true;
-    }
-    return end; 
-} 
-
-
-bool draw (std::string map) {
-    if (not_end(map)) return false;
-    if (!win(map) && !lose(map)) return true;
-}
-
-bool lose (std::string map) {
 
 
 bool win (std::string map) {

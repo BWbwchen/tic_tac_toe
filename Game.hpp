@@ -1,9 +1,10 @@
 #pragma once
 
-#include <vector>
+#include <string>
 
 #define PLAYER true 
 #define COMPUTER false
+// player win or lose 
 #define WIN 1
 #define LOSE -1
 #define DRAW 0
@@ -11,24 +12,26 @@
 
 class Game {
 private:
-    int _size = 9;
-    enum State { BLANK , OCCUPY };
-    std::vector<State > _map(size); 
+    // for easy to print map
+    std::string _map; 
     bool _turn;
+    int _State;
 
-    bool not_end (std::vector );
-    bool draw (std::vector );
-    bool win (std::vector );
+    bool not_end (std::string );
+    // not win and not lose 
+    bool draw (std::string );
+    bool win (std::string );
 public:
-    Game(){
+    Game(bool turn){
         // dont know whether it is ok
-        fill(_map.begin(), _map.end(), State::BLANK);
-        _turn = PLAYER;
+        _map = "012345678";
+        _turn = turn;
+        _State = NOT_END;
     }
 
-    int situation (std::vector );
-    bool valid_input (std::vector , int );
-    void message (std::vector );
-    void update (std::vector& , int , bool , std::vector );
-    void print_map (std::vector map);
+    int situation (std::string );
+    bool valid_input (std::string , int );
+    void message (std::string );
+    void update (std::string& , int , bool , std::string );
+    void print_map (std::string ) ;
 };
