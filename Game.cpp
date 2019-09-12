@@ -1,10 +1,10 @@
 #include "Game.hpp"
-
+#include <iostream>
 
 
 // private
 
-bool Game::not_end (std::string map) {
+bool Game::is_full (std::string map) {
     bool end = false;
     for (auto ch : map) {
         if (ch != 'o' || ch != 'x') {
@@ -16,7 +16,7 @@ bool Game::not_end (std::string map) {
 }
 
 bool Game::draw (std::string map) {
-    if (not_end(map)) return false;
+    if (is_full(map)) return false;
     if (!win(map) && !lose(map)) return true;
 }
 // player or computer win 
@@ -30,6 +30,7 @@ bool Game::win (std::string map) {
             if (map[i] == 'o') _State = WIN ;
             else _State = LOSE;
             return true;
+        }
     }
     // check for vertical 
     for (int i = 0; i <= 2; ++i) {
@@ -44,7 +45,7 @@ bool Game::win (std::string map) {
     // check for diagonal
     if ((map[0] == map[4] && map[4] == map[8] && map[0] != '0') || 
         (map[2] == map[4] && map[4] == map[6] && map[2] != '2')) {
-            if (map[i] == 'o') _State = WIN ;
+            if (map[4] == 'o') _State = WIN ;
             else _State = LOSE;
             return true;
     }

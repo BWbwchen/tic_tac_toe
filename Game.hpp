@@ -17,7 +17,7 @@ private:
     bool _turn;
     int _State;
 
-    bool not_end (std::string );
+    bool is_full (std::string );
     // not win and not lose 
     bool draw (std::string );
     bool win (std::string );
