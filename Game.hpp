@@ -2,36 +2,37 @@
 
 #include <string>
 
+#define P 1
+#define C 0
+#define NONE 2
+#define NOT_END 3
 #define PLAYER true 
 #define COMPUTER false
-// player win or lose 
-#define WIN 1
-#define LOSE -1
-#define DRAW 0
-#define NOT_END 2
 
 class Game {
 private:
     // for easy to print map
+    // player is o
+    // computer is x
     std::string _map; 
     bool _turn;
-    int _State;
+    int _winner;
 
-    bool is_full (std::string );
-    // not win and not lose 
-    bool draw (std::string );
-    bool win (std::string );
+    void message (std::string );
+    bool valid_input (int );
+    bool is_full (void);
+    bool win (void);
+    int computer_solve (void);
 public:
     Game(bool turn){
         // dont know whether it is ok
         _map = "012345678";
         _turn = turn;
-        _State = NOT_END;
+        _winner = NOT_END;
     }
 
-    int situation (std::string );
-    bool valid_input (std::string , int );
-    void message (std::string );
-    void update (std::string& , int , bool , std::string );
-    void print_map (std::string ) ;
+    bool end (void);
+    void update (void);
+    void print_map (void) ;
+    void winner (void);
 };
