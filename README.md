@@ -5,6 +5,6 @@ This is the project that I learn how to develope a project
 ## TODO 
 
 - [ ] GUI with sfml or sdl
-- [ ] OOP
+- [**x] OOP
 - [ ] can play with computer
 - [ ] pvp or pvc or cvc
